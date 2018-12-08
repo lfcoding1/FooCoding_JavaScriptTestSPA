@@ -15,38 +15,13 @@ class App {
     const root = document.getElementById('root');
     try {
       const data = await Util.fetchJSON(url);
-      this.data = data.map(repo => new Repository(repo));
+      //this.data = data.map(repo => new Repository(repo));
       await renderContainer(data)
     } catch (error) {
       this.renderError(error);
     }
     
-
-    function renderIndex0(data){
-      for (let i = 0; i < data.length; i++){          
-        let Image0Link = Util.createAndAppend('li', contributorsUl, {})
-        let contributor0Name = Util.createAndAppend('img', Image0Link, {src: data[i].avatar_url, class: 'imageSrc'});
-        let contributor0Link = Util.createAndAppend('a', Image0Link, {text: data[i].login, target: "_blank", href: data[i].html_url, id: 'link'});
-        let contributor0Badge = Util.createAndAppend('li', Image0Link, {text:"Contributions: " + data[i].contributions, class: 'badge'});
-      } //end for
-
-     
-                                       
-    data.forEach((repo) => {  
-      for (let i = 0; i < newArray.length; i++) {
-        Util.createAndAppend('option', selectList, {id: "myOption", value: i, text: newArray[i]});
-      }
-    });
-                        
-    function removeNodes(container){
-      while (ul.hasChildNodes()) {
-        ul.removeChild(ul.firstChild);
-      }
-      while (contributorsUl.hasChildNodes()) {
-        contributorsUl.removeChild(contributorsUl.firstChild);
-      }
-    } //end removeNodes
-                          
+    function renderIndex0(data){                    
     selectList.onchange = function(selectedIndex){                          
     let repoName = Util.createAndAppend('li', ul, { text: "Repository: ", class: 'nameInContainer', function: removeNodes()});
     Util.createAndAppend('a', repoName, { text: newArray[this.selectedIndex], id: 'linkInContainer', target: "_blank", href: htmlArray[this.selectedIndex]});
@@ -76,7 +51,7 @@ class App {
    * repo and its contributors as HTML elements in the DOM.
    * @param {number} index The array index of the repository.
    */
-  async fetchContributorsAndRender(index) {
+  /* async fetchContributorsAndRender(index) {
     try {
       const repo = this.repos[index];
       const contributors = await repo.fetchContributors();
@@ -97,7 +72,7 @@ class App {
     } catch (error) {
       this.renderError(error);
     }
-  }
+  } */
 
   /**
    * Render an error to the DOM.
@@ -107,7 +82,7 @@ class App {
   renderError(err) {
     let catsrc = 'https://us.123rf.com/450wm/photodeti/photodeti1702/photodeti170200132/72587923-cat-holding-stop-sign-isolated-on-white-background-.jpg?ver=6';
     Util.createAndAppend('div', root, { text: err.message, class: 'alert-error' }), 
-    Util.createAndAppend('img', root, {id: 'catImage', src: catsrc});
+    Util.createAndAppend('img', root, {id: 'catImage', src: catsrc, class: 'alert-error', alt: 'error image of cat'});
   }
 }
 
